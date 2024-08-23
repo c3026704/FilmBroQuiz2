@@ -112,3 +112,33 @@ public class MovieQuiz {
                 "Pulp Fiction"
         ));
     }
+    private void initializeGUI() {
+        frame = new JFrame("FilmBro Quiz");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setSize(600, 400);
+        frame.setLayout(new BorderLayout());
+
+        showWelcomeScreen();
+    }
+
+    private void showWelcomeScreen() {
+        JPanel welcomePanel = new JPanel();
+        welcomePanel.setLayout(new BorderLayout());
+
+        JLabel welcomeLabel = new JLabel("Welcome to the FilmBro Quiz!", JLabel.CENTER);
+        welcomeLabel.setFont(new Font("Serif", Font.BOLD, 24));
+        welcomePanel.add(welcomeLabel, BorderLayout.CENTER);
+
+        JButton startButton = new JButton("Start Quiz");
+        startButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                frame.remove(welcomePanel);
+                initializeQuizScreen();
+            }
+        });
+        welcomePanel.add(startButton, BorderLayout.SOUTH);
+
+        frame.add(welcomePanel);
+        frame.setVisible(true);
+    }
