@@ -210,3 +210,23 @@ public class MovieQuiz {
         }
         return null;
     }
+    private void handleEnd() {
+        showEndMessage();
+    }
+
+    private void showEndMessage() {
+        frame.getContentPane().removeAll();
+        frame.repaint();
+
+        JLabel resultLabel = new JLabel("Quiz Ended", JLabel.CENTER);
+        resultLabel.setFont(new Font("Serif", Font.BOLD, 24));
+
+        String message = score > 10 ? "You are a certified FilmBro!" : "You are not a FilmBro.";
+        JLabel scoreLabel = new JLabel(message, JLabel.CENTER);
+        scoreLabel.setFont(new Font("Serif", Font.PLAIN, 18));
+
+        frame.add(resultLabel, BorderLayout.NORTH);
+        frame.add(scoreLabel, BorderLayout.CENTER);
+
+        frame.setVisible(true);
+    }
