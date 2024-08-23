@@ -8,6 +8,7 @@ import java.util.List;
 
 public class MovieQuiz {
 
+    // Inner class representing a question in the quiz
     static class Question {
         String question;
         List<String> choices;
@@ -35,6 +36,17 @@ public class MovieQuiz {
     private JButton nextButton;
     private JButton endButton;
     private ButtonGroup choicesGroup;
+
+    // Constructor to initialize the quiz
+    public MovieQuiz() {
+        questions = new ArrayList<>();
+        currentQuestionIndex = 0;
+        score = 0;
+        initializeQuestions();
+        initializeGUI();
+    }
+
+    // Initialize quiz questions
     private void initializeQuestions() {
         questions.add(new Question(
                 "Which film was directed by Jean-Luc Godard?",
@@ -112,15 +124,18 @@ public class MovieQuiz {
                 "Pulp Fiction"
         ));
     }
+
+    // Initialize the GUI
     private void initializeGUI() {
         frame = new JFrame("FilmBro Quiz");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(600, 400);
         frame.setLayout(new BorderLayout());
 
-        showWelcomeScreen();
+        showWelcomeScreen(); // Show the welcome screen initially
     }
 
+    // Show the welcome screen with a start button
     private void showWelcomeScreen() {
         JPanel welcomePanel = new JPanel();
         welcomePanel.setLayout(new BorderLayout());
@@ -134,7 +149,7 @@ public class MovieQuiz {
             @Override
             public void actionPerformed(ActionEvent e) {
                 frame.remove(welcomePanel);
-                initializeQuizScreen();
+                initializeQuizScreen(); // Initialize the quiz screen
             }
         });
         welcomePanel.add(startButton, BorderLayout.SOUTH);
@@ -142,6 +157,8 @@ public class MovieQuiz {
         frame.add(welcomePanel);
         frame.setVisible(true);
     }
+
+    // Initialize the quiz screen
     private void initializeQuizScreen() {
         panel = new JPanel();
         panel.setLayout(new GridLayout(0, 1));
@@ -162,7 +179,7 @@ public class MovieQuiz {
         nextButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                handleNext();
+                handleNext(); // Handle the 'Next' button click
             }
         });
         panel.add(nextButton);
@@ -171,14 +188,16 @@ public class MovieQuiz {
         endButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                handleEnd();
+                handleEnd(); // Handle the 'End Quiz' button click
             }
         });
         panel.add(endButton);
 
         frame.add(panel);
-        showQuestion();
+        showQuestion(); // Display the first question
     }
+
+    // Display the current question
     private void showQuestion() {
         if (currentQuestionIndex < questions.size()) {
             Question currentQuestion = questions.get(currentQuestionIndex);
@@ -188,10 +207,11 @@ public class MovieQuiz {
                 choiceButtons[i].setActionCommand(currentQuestion.choices.get(i));
             }
         } else {
-            showEndMessage();
+            showEndMessage(); // Show end message if no more questions
         }
     }
 
+    // Handle the 'Next' button click
     private void handleNext() {
         Question currentQuestion = questions.get(currentQuestionIndex);
         String selectedAnswer = getSelectedAnswer();
@@ -199,9 +219,10 @@ public class MovieQuiz {
             score++;
         }
         currentQuestionIndex++;
-        showQuestion();
+        showQuestion(); // Display the next question
     }
 
+    // Get the selected answer from the radio buttons
     private String getSelectedAnswer() {
         for (JRadioButton button : choiceButtons) {
             if (button.isSelected()) {
@@ -210,10 +231,13 @@ public class MovieQuiz {
         }
         return null;
     }
+
+    // Handle the 'End Quiz' button click
     private void handleEnd() {
-        showEndMessage();
+        showEndMessage(); // Show end message
     }
 
+    // Display the end message with the final score
     private void showEndMessage() {
         frame.getContentPane().removeAll();
         frame.repaint();
@@ -230,7 +254,9 @@ public class MovieQuiz {
 
         frame.setVisible(true);
     }
+
+    // Main method to start the application
     public static void main(String[] args) {
-        new MovieQuiz();
+        SwingUtilities.invokeLater(() -> new MovieQuiz()); // Start the application on the Event Dispatch Thread
     }
 }
