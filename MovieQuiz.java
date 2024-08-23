@@ -142,3 +142,40 @@ public class MovieQuiz {
         frame.add(welcomePanel);
         frame.setVisible(true);
     }
+    private void initializeQuizScreen() {
+        panel = new JPanel();
+        panel.setLayout(new GridLayout(0, 1));
+
+        questionLabel = new JLabel("", JLabel.CENTER);
+        questionLabel.setFont(new Font("Serif", Font.PLAIN, 18));
+        panel.add(questionLabel);
+
+        choicesGroup = new ButtonGroup();
+        choiceButtons = new JRadioButton[4];
+        for (int i = 0; i < 4; i++) {
+            choiceButtons[i] = new JRadioButton();
+            choicesGroup.add(choiceButtons[i]);
+            panel.add(choiceButtons[i]);
+        }
+
+        nextButton = new JButton("Next");
+        nextButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                handleNext();
+            }
+        });
+        panel.add(nextButton);
+
+        endButton = new JButton("End Quiz");
+        endButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                handleEnd();
+            }
+        });
+        panel.add(endButton);
+
+        frame.add(panel);
+        showQuestion();
+    }
