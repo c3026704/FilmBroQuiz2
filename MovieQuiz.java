@@ -179,3 +179,34 @@ public class MovieQuiz {
         frame.add(panel);
         showQuestion();
     }
+    private void showQuestion() {
+        if (currentQuestionIndex < questions.size()) {
+            Question currentQuestion = questions.get(currentQuestionIndex);
+            questionLabel.setText(currentQuestion.question);
+            for (int i = 0; i < 4; i++) {
+                choiceButtons[i].setText(currentQuestion.choices.get(i));
+                choiceButtons[i].setActionCommand(currentQuestion.choices.get(i));
+            }
+        } else {
+            showEndMessage();
+        }
+    }
+
+    private void handleNext() {
+        Question currentQuestion = questions.get(currentQuestionIndex);
+        String selectedAnswer = getSelectedAnswer();
+        if (selectedAnswer != null && selectedAnswer.equals(currentQuestion.choices.get(currentQuestion.correctIndex))) {
+            score++;
+        }
+        currentQuestionIndex++;
+        showQuestion();
+    }
+
+    private String getSelectedAnswer() {
+        for (JRadioButton button : choiceButtons) {
+            if (button.isSelected()) {
+                return button.getActionCommand();
+            }
+        }
+        return null;
+    }
